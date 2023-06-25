@@ -51,8 +51,11 @@ class ArchiveBotreq:
             return False
         if time.time() - last_time.timestamp() > 86400 * 183:
             return True
-        if time.time() - last_time.timestamp() > 86400 * 14 and re.search(r'{{[\s_]*(完成|Done|Finish)[\s_]*(\||}})', text, flags=re.I):
-            return True
+        if time.time() - last_time.timestamp() > 86400 * 14:
+            if re.search(r'{{[\s_]*(完成|Done|Finish)[\s_]*(\||}})', text, flags=re.I):
+                return True
+            if re.search(r'{{[\s_]*BOTREQ[\s_]*\|[\s_]*done[\s_]*}}', text, flags=re.I):
+                return True
         return False
 
     def main(self):
